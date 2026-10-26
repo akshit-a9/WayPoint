@@ -4,9 +4,6 @@
 #  everything a compiler, simulator or package manager can regenerate.
 # =============================================================================
 
-# ---- Logged walks are data, keep them (generic *.log rule is below) -----------
-!data/sessions/**/raw.log
-
 # ---- Local-only stuff (submission zips, scratch, secrets) -------------------
 _archive/
 *.local
@@ -547,4 +544,6 @@ logs/
 tmp/
 temp/
 *.dump
+
+# Logged walks are data: keep raw.log (must come after *.log above)
 !data/sessions/**/raw.log
