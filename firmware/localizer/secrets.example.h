@@ -6,7 +6,7 @@
 #define WIFI_SSID     "your-2.4GHz-network"
 #define WIFI_PASSWORD "your-password"
 
-// Machine running the localization API (04_API/ in Indoor-Localization-Android, uvicorn on port 8000).
+// Machine running the localization API (04_API/ in Indoor-Localization, uvicorn on port 8000).
 // Windows Mobile Hotspot always puts the laptop at 192.168.137.1. On a phone
 // hotspot this is only a first guess: the board remembers the last address
 // that worked and probes the subnet for /health when that fails.

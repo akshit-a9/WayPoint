@@ -1,4 +1,4 @@
-// ESP32 client for the localization API (Indoor-Localization-Android repo, 04_API/).
+// ESP32 client for the localization API (Indoor-Localization repo, 04_API/).
 //
 // Every SCAN_INTERVAL_MS: scan 2.4 GHz WiFi -> POST /predict -> show the
 // predicted location on the OLED and pulse the RGB LED (blue while scanning,

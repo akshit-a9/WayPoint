@@ -10,7 +10,7 @@ streamed over serial at 100 Hz to build the dataset for the navigation step
 (pedestrian dead reckoning between WiFi fixes).
 
 The localization side (data collection, training, the API and the phone apps)
-lives in the [Indoor-Localization-Android](https://github.com/akshit-a9/Indoor-Localization-Android)
+lives in the [Indoor-Localization](https://github.com/akshit-a9/Indoor-Localization)
 repo. This repo only talks to its API over HTTP.
 
 ## Layout
