@@ -1,4 +1,4 @@
-// ESP32 client for localization_api.
+// ESP32 client for the localization API (Indoor-Localization-Android repo, 04_API/).
 //
 // Every SCAN_INTERVAL_MS: scan 2.4 GHz WiFi -> POST /predict -> show the
 // predicted location on the OLED and pulse the RGB LED (blue while scanning,
@@ -6,7 +6,7 @@
 //
 // In parallel an MPU6050 task streams accelerometer + gyro samples over serial
 // for the navigation dataset. Serial output is line-based CSV, one record type
-// per prefix (see ESP32/README.md); ESP32/tools/serial_logger.py records it.
+// per prefix (see README.md); tools/serial_logger.py records it.
 
 #include <Arduino.h>
 #include <WiFi.h>
@@ -74,7 +74,7 @@ static void ledInit() {
 }
 
 // ---------------------------------------------------------------------------
-// OLED (mode numbers match ESP32/hw_check)
+// OLED (mode numbers match firmware/hw_check)
 // ---------------------------------------------------------------------------
 static U8G2 *oled = nullptr;
 

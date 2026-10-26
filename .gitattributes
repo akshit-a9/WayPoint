@@ -1,0 +1,37 @@
+# Normalise line endings (LF in the repo, native on checkout) so Windows <-> Mac stays clean
+* text=auto
+*.sh   text eol=lf
+*.tcl  text eol=lf
+*.bat  text eol=crlf
+*.cmd  text eol=crlf
+*.ps1  text eol=crlf
+
+# Binary - never touch
+*.pdf  binary
+*.pptx binary
+*.ppt  binary
+*.docx binary
+*.doc  binary
+*.xlsx binary
+*.xls  binary
+*.key  binary
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.tif  binary
+*.mp4  binary
+*.mov  binary
+*.zip  binary
+*.gz   binary
+*.tar  binary
+*.7z   binary
+*.bin  binary
+*.hex  binary
+*.gds  binary
+*.oas  binary
+*.db   binary
+*.npy  binary
+*.pkl  binary
+*.h5   binary
+*.fzz  binary

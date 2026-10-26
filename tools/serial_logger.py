@@ -1,13 +1,13 @@
 """Record the localizer's serial stream into per-session CSV files.
 
 Usage (repo root, with the ESP32 plugged in and running `localizer`):
-    .venv/Scripts/python ESP32/tools/serial_logger.py            # auto-detect port
-    .venv/Scripts/python ESP32/tools/serial_logger.py --port COM5 --note "floor0 loop"
+    .venv/Scripts/python tools/serial_logger.py            # auto-detect port
+    .venv/Scripts/python tools/serial_logger.py --port COM5 --note "floor0 loop"
 
 While it runs, type a location name and press Enter to drop a ground-truth
 waypoint mark (e.g. "DLT8/1"). A bare Enter marks "waypoint". Type q to stop.
 
-Output: Data/05_ESP32_Sessions/<YYYY-mm-dd_HH-MM-SS>/
+Output: data/sessions/<YYYY-mm-dd_HH-MM-SS>/
     imu.csv    t_us,ax_g,ay_g,az_g,gx_dps,gy_dps,gz_dps        (~100 Hz)
     aps.csv    t_us,cycle,bssid,rssi,channel                    (raw 2.4 GHz scans)
     preds.csv  t_us,cycle,ok,class_index,confidence,ap_detected,ap_seen,latency_ms,label
@@ -26,7 +26,7 @@ from pathlib import Path
 import serial
 from serial.tools import list_ports
 
-REPO = Path(__file__).resolve().parents[2]
+REPO = Path(__file__).resolve().parents[1]
 ESP_USB_VIDS = {0x10C4, 0x1A86, 0x0403, 0x303A}  # CP210x, CH34x, FTDI, Espressif native
 
 HEADERS = {
@@ -49,7 +49,7 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--port")
     ap.add_argument("--baud", type=int, default=460800)
-    ap.add_argument("--out", type=Path, default=REPO / "Data" / "05_ESP32_Sessions")
+    ap.add_argument("--out", type=Path, default=REPO / "data" / "sessions")
     ap.add_argument("--note", default="", help="free-text description saved with the session")
     args = ap.parse_args()
 

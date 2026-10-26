@@ -1,7 +1,7 @@
 #pragma once
 
 // ---------------------------------------------------------------------------
-// Pins (ESP32 DevKit / WROOM-32). See ESP32/README.md for the wiring table.
+// Pins (ESP32 DevKit / WROOM-32). See README.md for the wiring table.
 // GPIO numbers; boards like the ESP32-32X print them as Dxx (21 = D21).
 // ---------------------------------------------------------------------------
 #define PIN_OLED_SDA 21   // I2C bus 0 (Wire)  -> OLED
@@ -25,7 +25,7 @@
                                // result colour (green/red) is held otherwise
 
 // ---------------------------------------------------------------------------
-// OLED. Run ESP32/hw_check first: it cycles through these modes and prints
+// OLED. Run firmware/hw_check first: it cycles through these modes and prints
 // the number of each one. Put the number of the cleanest one here.
 //   1 SH1106 NONAME      2 SH1106 NONAME + sequential COM
 //   3 SSD1306 NONAME     4 SSD1306 NONAME + sequential COM

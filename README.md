@@ -1,22 +1,33 @@
-# ESP32
+# WayPoint
 
-ESP32 client for [localization_api](../localization_api/). The board scans
-2.4 GHz WiFi, POSTs the scan to `/predict`, shows the predicted location on a
-1.3" I2C OLED and pulses an RGB LED (blue while scanning, green on a
-prediction, red on any error). An MPU6050 is streamed over serial at 100 Hz to
-build the dataset for the navigation step.
+A handheld indoor navigation device built on a WiFi-based localization service
+(IoT course project, CS G518).
+
+An ESP32 scans 2.4 GHz WiFi, POSTs the scan to the localization API's `/predict`
+endpoint, shows the predicted location on a 1.3" I2C OLED and pulses an RGB LED
+(blue while scanning, green on a prediction, red on any error). An MPU6050 is
+streamed over serial at 100 Hz to build the dataset for the navigation step
+(pedestrian dead reckoning between WiFi fixes).
+
+The localization side (data collection, training, the API and the phone apps)
+lives in the [Indoor-Localization-Android](https://github.com/akshit-a9/Indoor-Localization-Android)
+repo. This repo only talks to its API over HTTP.
 
 ## Layout
 
 ```
-ESP32/
-├── hw_check/        Bench bring-up: LED, I2C scan, MPU6050 readout, OLED driver modes
-├── localizer/       Main firmware
-│   ├── localizer.ino
-│   ├── config.h           Pins, OLED mode, API model, scan/IMU settings
-│   └── secrets.example.h  Copy to secrets.h (git-ignored) and fill in
-└── tools/
-    └── serial_logger.py   Records IMU + scans + predictions to Data/05_ESP32_Sessions/
+.
+├── firmware/
+│   ├── hw_check/            Bench bring-up: LED, I2C scan, MPU6050 readout, OLED driver modes
+│   └── localizer/           Main firmware
+│       ├── localizer.ino
+│       ├── config.h             Pins, OLED mode, API model, scan/IMU settings
+│       └── secrets.example.h    Copy to secrets.h (git-ignored) and fill in
+├── tools/
+│   └── serial_logger.py     Records IMU + scans + predictions to data/sessions/
+├── data/sessions/           Logged walks (created by serial_logger.py)
+├── docs/Reports/            Mid-semester reports
+└── requirements.txt         Python deps for tools/ (pyserial)
 ```
 
 ## Why a separate 2.4 GHz model
@@ -24,11 +35,10 @@ ESP32/
 The Android collector saw both bands; 73 of the 149 feature BSSIDs are 5 GHz,
 which a classic ESP32 cannot receive. With those columns stuck at -100 dBm the
 stock Random Forest drops from 94% to 40% test accuracy.
-[../Notebooks/Wifi/06_Train_2_4GHz_Model.py](../Notebooks/Wifi/06_Train_2_4GHz_Model.py)
-retrains it with the 5 GHz columns masked and registers it in the API as
-`Random Forest 2.4GHz` (91.0% test / 95.2% val). The feature vector is
-unchanged, so the API code needed no changes; the firmware just asks for that
-model.
+`03_Training/06_Train_2_4GHz_Model.py` in the localization repo retrains it with
+the 5 GHz columns masked and registers it in the API as `Random Forest 2.4GHz`
+(91.0% test / 95.2% val). The feature vector is unchanged, so the API code
+needed no changes; the firmware just asks for that model.
 
 RSSI read by the ESP32 antenna is not calibrated against the phone. If live
 accuracy is poor, compare `aps.csv` from a logged session against the raw
@@ -73,8 +83,8 @@ Arduino IDE 2 and/or arduino-cli with:
 - Libraries `U8g2` and `ArduinoJson` (v7).
 
 ```bash
-arduino-cli compile --fqbn esp32:esp32:esp32 ESP32/hw_check
-arduino-cli upload  --fqbn esp32:esp32:esp32 -p COM5 ESP32/hw_check
+arduino-cli compile --fqbn esp32:esp32:esp32 firmware/hw_check
+arduino-cli upload  --fqbn esp32:esp32:esp32 -p COM5 firmware/hw_check
 ```
 
 ## Bring-up
@@ -82,14 +92,15 @@ arduino-cli upload  --fqbn esp32:esp32:esp32 -p COM5 ESP32/hw_check
 1. Flash `hw_check`, open the serial monitor at 115200. Expect `0x3C` on bus 0
    and `0x68` on bus 1, the LED cycling R/G/B/white, and the OLED stepping
    through modes 1–6. Pick the mode with a solid box and no stripes and set
-   `OLED_MODE` in `localizer/config.h`. If none is clean the panel really is
+   `OLED_MODE` in `firmware/localizer/config.h`. If none is clean the panel really is
    damaged; keep `OLED_ROW_DOUBLE 1` so text stays readable on alternate lines.
-2. Start the API on the laptop (`localization_api/run.ps1`). Allow Python
-   through Windows Firewall on private networks.
+2. Start the API on the laptop (`04_API/run.ps1` in the localization repo).
+   Allow Python through Windows Firewall on private networks.
 3. Put the ESP32 and the laptop on the same 2.4 GHz network. Simplest:
    Windows Mobile Hotspot with band set to 2.4 GHz; the laptop is then
-   `192.168.137.1`.
-4. `cp localizer/secrets.example.h localizer/secrets.h`, fill in SSID,
+   `192.168.137.1`. On a phone hotspot the board remembers the last address
+   that worked and probes the subnet for `/health` when it moves.
+4. `cp firmware/localizer/secrets.example.h firmware/localizer/secrets.h`, fill in SSID,
    password and `API_BASE_URL`, flash `localizer`.
 
 ## Serial protocol (460800 baud)
@@ -109,7 +120,9 @@ so IMU samples and WiFi fixes line up without any host-side clock sync.
 ## Collecting IMU data
 
 ```bash
-.venv/Scripts/python ESP32/tools/serial_logger.py --note "floor0 corridor loop"
+python -m venv .venv
+.venv/Scripts/pip install -r requirements.txt     # macOS: .venv/bin/pip
+.venv/Scripts/python tools/serial_logger.py --note "floor0 corridor loop"
 ```
 
 Walk with the breadboard held flat. Each time you pass a labelled spot, type
