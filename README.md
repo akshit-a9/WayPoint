@@ -1,130 +1,150 @@
 # WayPoint
 
-A handheld indoor navigation device built on a WiFi-based localization service
+A handheld device that shows where you are inside the building, using WiFi
 (IoT course project, CS G518).
 
-An ESP32 scans 2.4 GHz WiFi, POSTs the scan to the localization API's `/predict`
-endpoint, shows the predicted location on a 1.3" I2C OLED and pulses an RGB LED
-(blue while scanning, green on a prediction, red on any error). An MPU6050 is
-streamed over serial at 100 Hz to build the dataset for the navigation step
-(pedestrian dead reckoning between WiFi fixes).
+An ESP32 scans the WiFi networks around it and sends the list to a small
+server on your laptop. The server's trained model works out the location, and
+the ESP32 shows it on its OLED screen.
 
-The localization side (data collection, training, the API and the phone apps)
-lives in the [Indoor-Localization](https://github.com/akshit-a9/Indoor-Localization)
-repo. This repo only talks to its API over HTTP.
+```
+ ESP32                                   Laptop (api-server/)
+ ─────                                   ────────────────────
+ 1. scan WiFi access points
+ 2. POST /predict  ───── WiFi ─────▶     model picks the closest location
+ 3. show it on the OLED  ◀────────────   {"location": "D-152", "confidence": 0.84}
+```
 
-## Layout
+## Folders
 
 ```
 .
-├── firmware/
-│   ├── hw_check/            Bench bring-up: LED, I2C scan, MPU6050 readout, OLED driver modes
-│   └── localizer/           Main firmware
-│       ├── localizer.ino
-│       ├── config.h             Pins, OLED mode, API model, scan/IMU settings
-│       └── secrets.example.h    Copy to secrets.h (git-ignored) and fill in
-├── tools/
-│   └── serial_logger.py     Records IMU + scans + predictions to data/sessions/
-├── data/sessions/           Logged walks (created by serial_logger.py)
-├── docs/Reports/            Mid-semester reports
-└── requirements.txt         Python deps for tools/ (pyserial)
+├── api-server/          The laptop server + trained model (has its own README)
+├── firmware/waypoint/   The ESP32 code
+├── archive/             The old, more complex firmware (reference only)
+└── docs/Reports/        Mid-semester reports
 ```
 
-## Why a separate 2.4 GHz model
+The model was trained in the
+[Indoor-Localization](https://github.com/akshit-a9/Indoor-Localization) repo.
+Everything needed to run it has been copied into `api-server/`.
 
-The Android collector saw both bands; 73 of the 149 feature BSSIDs are 5 GHz,
-which a classic ESP32 cannot receive. With those columns stuck at -100 dBm the
-stock Random Forest drops from 94% to 40% test accuracy.
-`03_Training/06_Train_2_4GHz_Model.py` in the localization repo retrains it with
-the 5 GHz columns masked and registers it in the API as `Random Forest 2.4GHz`
-(91.0% test / 95.2% val). The feature vector is unchanged, so the API code
-needed no changes; the firmware just asks for that model.
+## The LEDs
 
-RSSI read by the ESP32 antenna is not calibrated against the phone. If live
-accuracy is poor, compare `aps.csv` from a logged session against the raw
-Android CSVs for the same spot and set `RSSI_OFFSET_DB` in `config.h`.
+**API LED** (single LED): **on** while the server answers, **off** when it
+doesn't.
 
-## Wiring (ESP32 DevKit / WROOM-32, e.g. ESP32-32X)
+**Status LED** (RGB): shows which step the device is on.
 
-Boards like the ESP32-32X label pins `Dxx`; `Dxx` is GPIOxx. On the 30-pin
-layout D25, D26, D27 are adjacent on one edge; D22, D21, D19, D18, 3V3 and GND
-are on the other. Never use VIN (5 V).
+| Colour | Meaning |
+|--------|---------|
+| Purple | Connecting to WiFi |
+| Blue   | Scanning WiFi networks |
+| Yellow | Scan sent, waiting for the server |
+| Green  | Response received, location is on the screen |
+| Red    | Something went wrong (the screen says what) |
 
-| Part            | Pin      | ESP32            |
-|-----------------|----------|------------------|
-| OLED 1.3" I2C   | VCC      | 3V3              |
-|                 | GND      | GND              |
-|                 | SCL      | D22 (GPIO22)          |
-|                 | SDA      | D21 (GPIO21)          |
-| MPU6050 (GY-521)| VCC      | 3V3              |
-|                 | GND      | GND              |
-|                 | SCL      | D18 (GPIO18)          |
-|                 | SDA      | D19 (GPIO19)          |
-|                 | AD0      | GND (address 0x68) |
-| RGB LED         | R        | D27 (direct, or 100 Ω–1 kΩ) |
-|                 | G        | D26 (direct, or 100 Ω–1 kΩ) |
-|                 | B        | D25 (direct, or 100 Ω–1 kΩ) |
-|                 | common   | GND (common cathode) or 3V3 (common anode, set `LED_COMMON_ANODE 1`) |
+## Wiring (ESP32 DevKit)
 
-Without series resistors keep `LED_NO_RESISTORS 1`: the LED pins are set to
-their weakest drive strength (~5 mA), which protects the LED and the GPIO.
+Use 3V3 for power, never VIN (that is 5 V). Boards like the ESP32-32X label
+pins `D21`, `D22` and so on; `D21` means GPIO21.
 
-OLED pin order differs between modules (VCC/GND are often swapped), so follow
-the silkscreen. The OLED and the MPU6050 sit on separate I2C buses so that a
-display refresh never delays an IMU sample.
+| Part          | Part pin | ESP32 pin |
+|---------------|----------|-----------|
+| OLED 1.3" I2C | VCC      | 3V3       |
+|               | GND      | GND       |
+|               | SCL      | D22       |
+|               | SDA      | D21       |
+| RGB LED       | R        | D27       |
+|               | G        | D26       |
+|               | B        | D25       |
+|               | common (longest leg) | GND (or 3V3 for a common-anode LED, then set `RGB_COMMON_ANODE 1` in `config.h`) |
+| API LED       | + (long leg)  | D2, through a 220 Ω–1 kΩ resistor |
+|               | − (short leg) | GND       |
 
-## Toolchain
+D2 also drives the small blue LED built into most DevKits, so the API LED
+works before you wire anything. The firmware sets the LED pins to their
+weakest drive (~5 mA), so LEDs without resistors won't be damaged.
 
-Arduino IDE 2 and/or arduino-cli with:
+Some OLED modules have VCC and GND in the other order, so go by the labels
+printed on the board.
 
-- Board package `esp32` by Espressif (board URL
-  `https://espressif.github.io/arduino-esp32/package_esp32_index.json`),
-  board **ESP32 Dev Module** (`esp32:esp32:esp32`).
-- Libraries `U8g2` and `ArduinoJson` (v7).
+## Quick start
+
+### 1. Start the server on your laptop
+
+See [api-server/README.md](api-server/README.md). In short:
 
 ```bash
-arduino-cli compile --fqbn esp32:esp32:esp32 firmware/hw_check
-arduino-cli upload  --fqbn esp32:esp32:esp32 -p COM5 firmware/hw_check
+cd api-server
+python3 -m venv .venv && source .venv/bin/activate
+pip install -r requirements.txt
+uvicorn server:app --host 0.0.0.0 --port 8000
 ```
 
-## Bring-up
+### 2. Put the laptop and the ESP32 on the same 2.4 GHz network
 
-1. Flash `hw_check`, open the serial monitor at 115200. Expect `0x3C` on bus 0
-   and `0x68` on bus 1, the LED cycling R/G/B/white, and the OLED stepping
-   through modes 1–6. Pick the mode with a solid box and no stripes and set
-   `OLED_MODE` in `firmware/localizer/config.h`. If none is clean the panel really is
-   damaged; keep `OLED_ROW_DOUBLE 1` so text stays readable on alternate lines.
-2. Start the API on the laptop (`04_API/run.ps1` in the localization repo).
-   Allow Python through Windows Firewall on private networks.
-3. Put the ESP32 and the laptop on the same 2.4 GHz network. Simplest:
-   Windows Mobile Hotspot with band set to 2.4 GHz; the laptop is then
-   `192.168.137.1`. On a phone hotspot the board remembers the last address
-   that worked and probes the subnet for `/health` when it moves.
-4. `cp firmware/localizer/secrets.example.h firmware/localizer/secrets.h`, fill in SSID,
-   password and `API_BASE_URL`, flash `localizer`.
+A hotspot from your phone or laptop is easiest (set it to 2.4 GHz). Note the
+laptop's IP address on it (`ipconfig getifaddr en0` on macOS, `ipconfig` on
+Windows).
 
-## Serial protocol (460800 baud)
+### 3. Flash the ESP32
 
-| Prefix | Fields |
-|--------|--------|
-| `IMU`  | `t_us,ax_g,ay_g,az_g,gx_dps,gy_dps,gz_dps` |
-| `SCAN` | `t_us,cycle,n_aps` |
-| `AP`   | `t_us,cycle,bssid,rssi,channel` |
-| `PRED` | `t_us,cycle,ok,class_index,confidence,ap_detected,ap_seen,latency_ms,"label_or_error"` |
-| `ERR`  | `t_us,message` |
-| `#`    | free-text log |
-
-`t_us` is microseconds since boot on the ESP32, shared by all record types,
-so IMU samples and WiFi fixes line up without any host-side clock sync.
-
-## Collecting IMU data
+Copy the secrets template and fill in the WiFi name, password and the
+laptop's address:
 
 ```bash
-python -m venv .venv
-.venv/Scripts/pip install -r requirements.txt     # macOS: .venv/bin/pip
-.venv/Scripts/python tools/serial_logger.py --note "floor0 corridor loop"
+cp firmware/waypoint/secrets.example.h firmware/waypoint/secrets.h
 ```
 
-Walk with the breadboard held flat. Each time you pass a labelled spot, type
-its name and press Enter; those marks are the ground truth for evaluating
-pedestrian dead reckoning later.
+```c
+#define WIFI_SSID     "MyHotspot"
+#define WIFI_PASSWORD "password123"
+#define API_BASE_URL  "http://192.168.1.5:8000"
+```
+
+`secrets.h` is git-ignored, so the password won't be committed.
+
+Then open `firmware/waypoint/waypoint.ino` in Arduino IDE 2 and upload, with:
+
+- Board package **esp32** by Espressif. Add
+  `https://espressif.github.io/arduino-esp32/package_esp32_index.json` to
+  Preferences → Additional boards manager URLs first.
+- Board **ESP32 Dev Module**.
+- Libraries **U8g2** and **ArduinoJson** (version 7), from the Library Manager.
+
+Or use the command line:
+
+```bash
+arduino-cli compile --fqbn esp32:esp32:esp32 firmware/waypoint
+arduino-cli upload  --fqbn esp32:esp32:esp32 -p <port> firmware/waypoint
+```
+
+### 4. Watch it work
+
+Open the Serial Monitor at **115200** baud to see each step: the APs found,
+the request being sent, and the location that comes back. The server terminal
+prints one line per scan too.
+
+## Firmware files
+
+| File | What it does |
+|------|--------------|
+| `waypoint.ino`   | `setup()` and `loop()`: connect, then scan → send → show, forever |
+| `scanner.*`      | Scans WiFi and builds the JSON request |
+| `api_client.*`   | Talks to the server (`/health`, `/predict`) |
+| `display.*`      | Draws the OLED screens |
+| `leds.*`         | API LED and RGB status LED |
+| `config.h`       | Pins and timings |
+| `secrets.h`      | WiFi and server address (you create it from `secrets.example.h`) |
+
+## Problems
+
+| What you see | What to check |
+|--------------|---------------|
+| Stuck on purple / "Connecting WiFi" | Wrong SSID or password, or the network is 5 GHz only. |
+| "Server not found", API LED off | Server not running, wrong IP in `secrets.h`, not on the same network, or the laptop firewall is blocking port 8000. |
+| Red, "No known WiFi APs here" | You are outside the area the model was trained on. |
+| Screen text only on every other line | Our panel needs `OLED_ROW_DOUBLE 1` in `config.h`. Set it to 0 on a healthy screen. |
+| Screen shows garbage | It may not be an SH1106. Try `archive/hw_check/`, which tests several driver types. |
+| `secrets.h: No such file or directory` | You skipped the copy in step 3. |
