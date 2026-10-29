@@ -1,0 +1,7 @@
+fastapi>=0.110
+uvicorn>=0.27
+numpy>=1.24
+joblib>=1.3
+# The model file was saved with scikit-learn 1.8.0. Other versions may refuse
+# to load it or give different answers, so keep this pinned.
+scikit-learn==1.8.0
