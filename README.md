@@ -21,7 +21,6 @@ the ESP32 shows it on its OLED screen.
 .
 ├── api-server/          The laptop server + trained model (has its own README)
 ├── firmware/waypoint/   The ESP32 code
-├── archive/             The old, more complex firmware (reference only)
 └── docs/Reports/        Mid-semester reports
 ```
 
@@ -146,5 +145,5 @@ prints one line per scan too.
 | "Server not found", API LED off | Server not running, wrong IP in `secrets.h`, not on the same network, or the laptop firewall is blocking port 8000. |
 | Red, "No known WiFi APs here" | You are outside the area the model was trained on. |
 | Screen text only on every other line | Our panel needs `OLED_ROW_DOUBLE 1` in `config.h`. Set it to 0 on a healthy screen. |
-| Screen shows garbage | It may not be an SH1106. Try `archive/hw_check/`, which tests several driver types. |
+| Screen shows garbage | It may not be an SH1106. The old `hw_check` sketch tests several driver types: `git show b8fc9b2:archive/hw_check/hw_check.ino`. |
 | `secrets.h: No such file or directory` | You skipped the copy in step 3. |
