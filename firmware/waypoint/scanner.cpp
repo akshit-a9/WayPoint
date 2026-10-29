@@ -13,7 +13,7 @@ int scanWifi(JsonDocument &request) {
     JsonObject ap = scans.add<JsonObject>();
     ap["bssid"] = WiFi.BSSIDstr(i);  // the AP's MAC address, e.g. "70:ea:1a:22:a9:41"
     ap["rssi"] = WiFi.RSSI(i);       // signal strength in dBm, e.g. -60
-    Serial.printf("  %s  %4d dBm  %s\n", WiFi.BSSIDstr(i).c_str(), WiFi.RSSI(i), WiFi.SSID(i).c_str());
+    Serial.printf("  %s  %4d dBm  %s\n", WiFi.BSSIDstr(i).c_str(), (int)WiFi.RSSI(i), WiFi.SSID(i).c_str());
   }
   WiFi.scanDelete();  // free the scan results
   return found;
