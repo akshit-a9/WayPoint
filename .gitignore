@@ -547,3 +547,6 @@ temp/
 
 # Logged walks are data: keep raw.log (must come after *.log above)
 !data/sessions/**/raw.log
+
+# Old firmware kept locally for reference, not tracked
+archive/
