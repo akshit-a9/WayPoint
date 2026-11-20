@@ -1,0 +1,910 @@
+{
+ "schema": 1,
+ "id": "bits-main",
+ "name": "BITS main building (D block)",
+ "note": "Migrated from Indoor-Localization: 52 phone-recorded spots. Positions are floor-plan pixels until the plans are aligned (x/y null).",
+ "anchor": {
+  "lat": 15.391678498594382,
+  "lon": 73.88266859412738,
+  "rotation": 0
+ },
+ "floors": [
+  {
+   "id": "0",
+   "name": "Ground floor",
+   "level": 0,
+   "height": 4,
+   "outline": [],
+   "overlay": {
+    "image": "sites/bits-main/plans/map_0.png",
+    "x": 0.54,
+    "y": 81.97,
+    "scale": 0.05196,
+    "rotation": 75.02
+   }
+  },
+  {
+   "id": "1",
+   "name": "First floor",
+   "level": 1,
+   "height": 4,
+   "outline": [],
+   "overlay": {
+    "image": "sites/bits-main/plans/map_1.png",
+    "x": 21.31,
+    "y": 62.89,
+    "scale": 0.07194,
+    "rotation": 75.03
+   }
+  }
+ ],
+ "spots": [
+  {
+   "id": "Stairs_Opp_DLT8_2",
+   "name": "Stairs Opp DLT8 2",
+   "floor": "0",
+   "x": -25.71,
+   "y": 41.16,
+   "px": [
+    628,
+    691
+   ]
+  },
+  {
+   "id": "Btw_DLT_8_and_F_Chamber_Entrance",
+   "name": "Btw DLT 8 and F Chamber Entrance",
+   "floor": "0",
+   "x": -24.98,
+   "y": 38.45,
+   "px": [
+    682,
+    691
+   ]
+  },
+  {
+   "id": "F_Chamber_Entrance_Opp_DLT8",
+   "name": "F Chamber Entrance Opp DLT8",
+   "floor": "0",
+   "x": -23.73,
+   "y": 33.79,
+   "px": [
+    775,
+    691
+   ]
+  },
+  {
+   "id": "Garden_Btw_F_Cham_and_Computational_Lab",
+   "name": "Garden Btw F Cham and Computational Lab",
+   "floor": "0",
+   "x": -17.23,
+   "y": 35.42,
+   "px": [
+    777,
+    562
+   ]
+  },
+  {
+   "id": "Near_Stairs_To_1st_Floor",
+   "name": "Near Stairs To 1st Floor",
+   "floor": "0",
+   "x": -11.26,
+   "y": 37.23,
+   "px": [
+    773,
+    442
+   ]
+  },
+  {
+   "id": "Btw_Stairs_and_DLT7",
+   "name": "Btw Stairs and DLT7",
+   "floor": "0",
+   "x": -12.28,
+   "y": 41.85,
+   "px": [
+    682,
+    438
+   ]
+  },
+  {
+   "id": "Opposite_DLT7_2",
+   "name": "Opposite DLT7 2",
+   "floor": "0",
+   "x": -13.01,
+   "y": 44.56,
+   "px": [
+    628,
+    438
+   ]
+  },
+  {
+   "id": "Garden_Btw_DLT7_DLT8_Stairs",
+   "name": "Garden Btw DLT7 DLT8 Stairs",
+   "floor": "0",
+   "x": -19.37,
+   "y": 43.4,
+   "px": [
+    618,
+    562
+   ]
+  },
+  {
+   "id": "D-151/1 Computation Lab",
+   "name": "D-151/1 Computation Lab",
+   "floor": "0",
+   "x": -12.86,
+   "y": 33.15,
+   "px": [
+    841,
+    492
+   ]
+  },
+  {
+   "id": "D-152",
+   "name": "D-152",
+   "floor": "0",
+   "x": -11.93,
+   "y": 29.68,
+   "px": [
+    910,
+    492
+   ]
+  },
+  {
+   "id": "D-151/2_D-153/1",
+   "name": "D-151/2 D-153/1",
+   "floor": "0",
+   "x": -10.11,
+   "y": 22.86,
+   "px": [
+    1046,
+    492
+   ]
+  },
+  {
+   "id": "D-154",
+   "name": "D-154",
+   "floor": "0",
+   "x": -8.15,
+   "y": 15.53,
+   "px": [
+    1192,
+    492
+   ]
+  },
+  {
+   "id": "D-153/2 SMART Space",
+   "name": "D-153/2 SMART Space",
+   "floor": "0",
+   "x": -7.27,
+   "y": 12.27,
+   "px": [
+    1257,
+    492
+   ],
+   "dest": {
+    "category": "room"
+   }
+  },
+  {
+   "id": "F_Chamber_Entrance_2",
+   "name": "F Chamber Entrance 2",
+   "floor": "0",
+   "x": -13.8,
+   "y": 13.53,
+   "px": [
+    1201,
+    607
+   ]
+  },
+  {
+   "id": "Opp_CSIS_Meeting_Room",
+   "name": "Opp CSIS Meeting Room",
+   "floor": "0",
+   "x": -20.62,
+   "y": 11.71,
+   "px": [
+    1201,
+    743
+   ]
+  },
+  {
+   "id": "D-157,158,159,160",
+   "name": "D-157,158,159,160",
+   "floor": "0",
+   "x": -19.73,
+   "y": 16.41,
+   "px": [
+    1118,
+    703
+   ]
+  },
+  {
+   "id": "D-161,162,163,164",
+   "name": "D-161,162,163,164",
+   "floor": "0",
+   "x": -21.33,
+   "y": 22.38,
+   "px": [
+    999,
+    703
+   ]
+  },
+  {
+   "id": "D-165,166,167,168",
+   "name": "D-165,166,167,168",
+   "floor": "0",
+   "x": -22.9,
+   "y": 28.47,
+   "px": [
+    878,
+    702
+   ]
+  },
+  {
+   "id": "D-169, CAIR",
+   "name": "D-169, CAIR",
+   "floor": "0",
+   "x": -23.75,
+   "y": 31.63,
+   "px": [
+    815,
+    702
+   ],
+   "dest": {
+    "category": "room"
+   }
+  },
+  {
+   "id": "DLT-8/1",
+   "name": "DLT-8/1",
+   "floor": "0",
+   "x": -34.14,
+   "y": 64.83,
+   "px": [
+    146,
+    730
+   ]
+  },
+  {
+   "id": "Between DLT7 and DLT8",
+   "name": "Between DLT7 and DLT8",
+   "floor": "0",
+   "x": -25.98,
+   "y": 66.7,
+   "px": [
+    152,
+    569
+   ]
+  },
+  {
+   "id": "DLT7/1",
+   "name": "DLT7/1",
+   "floor": "0",
+   "x": -18.68,
+   "y": 69.18,
+   "px": [
+    142,
+    421
+   ],
+   "dest": {
+    "category": "room"
+   }
+  },
+  {
+   "id": "DLT8 Ramp",
+   "name": "DLT8 Ramp",
+   "floor": "0",
+   "x": -26.5,
+   "y": 54.18,
+   "px": [
+    382,
+    641
+   ]
+  },
+  {
+   "id": "DLT7 Ramp",
+   "name": "DLT7 Ramp",
+   "floor": "0",
+   "x": -18.98,
+   "y": 55.23,
+   "px": [
+    400,
+    496
+   ]
+  },
+  {
+   "id": "1st Stairs midway",
+   "name": "1st Stairs midway",
+   "floor": "1",
+   "x": -4.15,
+   "y": 43.94,
+   "px": [
+    163,
+    410
+   ]
+  },
+  {
+   "id": "1st floor a/f 1st Stairs, D250/2",
+   "name": "1st floor a/f 1st Stairs, D250/2",
+   "floor": "1",
+   "x": -7.79,
+   "y": 39.47,
+   "px": [
+    210,
+    475
+   ]
+  },
+  {
+   "id": "Between stairs and faculty Chamber, 1st floor",
+   "name": "Between stairs and faculty Chamber, 1st floor",
+   "floor": "1",
+   "x": -13.53,
+   "y": 38.08,
+   "px": [
+    208,
+    557
+   ],
+   "dest": {
+    "category": "room"
+   }
+  },
+  {
+   "id": "Faculty Chamber Entrance, IT room 1st floor",
+   "name": "Faculty Chamber Entrance, IT room 1st floor",
+   "floor": "1",
+   "x": -24.2,
+   "y": 35.08,
+   "px": [
+    210,
+    711
+   ]
+  },
+  {
+   "id": "D254/253",
+   "name": "D254/253",
+   "floor": "1",
+   "x": -23.66,
+   "y": 32.25,
+   "px": [
+    250,
+    714
+   ]
+  },
+  {
+   "id": "D-255, 256, 257, 258",
+   "name": "D-255, 256, 257, 258",
+   "floor": "1",
+   "x": -22.84,
+   "y": 29.19,
+   "px": [
+    294,
+    714
+   ],
+   "dest": {
+    "category": "room"
+   }
+  },
+  {
+   "id": "D-259, 260, 261, 262",
+   "name": "D-259, 260, 261, 262",
+   "floor": "1",
+   "x": -21.97,
+   "y": 25.92,
+   "px": [
+    341,
+    714
+   ]
+  },
+  {
+   "id": "D-263, 264, 265, 266",
+   "name": "D-263, 264, 265, 266",
+   "floor": "1",
+   "x": -19.7,
+   "y": 17.44,
+   "px": [
+    463,
+    714
+   ]
+  },
+  {
+   "id": "D-267",
+   "name": "D-267",
+   "floor": "1",
+   "x": -19.18,
+   "y": 11.03,
+   "px": [
+    551,
+    730
+   ]
+  },
+  {
+   "id": "HOD, CSIS",
+   "name": "HOD, CSIS",
+   "floor": "1",
+   "x": -25.58,
+   "y": 9.32,
+   "px": [
+    551,
+    822
+   ]
+  },
+  {
+   "id": "Faculty Chamber Entrance 2, near 2nd Stairs",
+   "name": "Faculty Chamber Entrance 2, near 2nd Stairs",
+   "floor": "1",
+   "x": -12.38,
+   "y": 12.62,
+   "px": [
+    554,
+    633
+   ],
+   "dest": {
+    "category": "room"
+   }
+  },
+  {
+   "id": "D-251",
+   "name": "D-251",
+   "floor": "1",
+   "x": -11.9,
+   "y": 34.5,
+   "px": [
+    262,
+    548
+   ]
+  },
+  {
+   "id": "D-249/2 and D-250/1",
+   "name": "D-249/2 and D-250/1",
+   "floor": "1",
+   "x": -10.34,
+   "y": 28.66,
+   "px": [
+    346,
+    548
+   ]
+  },
+  {
+   "id": "Between D249/1 and D249/2",
+   "name": "Between D249/1 and D249/2",
+   "floor": "1",
+   "x": -7.8,
+   "y": 19.14,
+   "px": [
+    483,
+    548
+   ]
+  },
+  {
+   "id": "D249/1",
+   "name": "D249/1",
+   "floor": "1",
+   "x": -5.73,
+   "y": 11.42,
+   "px": [
+    594,
+    548
+   ]
+  },
+  {
+   "id": "Corner of FC Entrance 2 and D249/1",
+   "name": "Corner of FC Entrance 2 and D249/1",
+   "floor": "1",
+   "x": -10.24,
+   "y": 5.98,
+   "px": [
+    651,
+    628
+   ]
+  },
+  {
+   "id": "1st floor lift and Stairs 3",
+   "name": "1st floor lift and Stairs 3",
+   "floor": "1",
+   "x": 10.68,
+   "y": 11.57,
+   "px": [
+    651,
+    327
+   ]
+  },
+  {
+   "id": "Between 1st floor lift and D249/1",
+   "name": "Between 1st floor lift and D249/1",
+   "floor": "1",
+   "x": 3.11,
+   "y": 9.54,
+   "px": [
+    651,
+    436
+   ],
+   "dest": {
+    "category": "room"
+   }
+  },
+  {
+   "id": "Midway Stairs 3",
+   "name": "Midway Stairs 3",
+   "floor": "1",
+   "x": 13.37,
+   "y": 7.07,
+   "px": [
+    721,
+    307
+   ]
+  },
+  {
+   "id": "Ground Floor Lift",
+   "name": "Ground Floor Lift",
+   "floor": "0",
+   "x": 8.92,
+   "y": 13.05,
+   "px": [
+    1323,
+    187
+   ]
+  },
+  {
+   "id": "Between Lift and Smart Space",
+   "name": "Between Lift and Smart Space",
+   "floor": "0",
+   "x": 1.54,
+   "y": 11.07,
+   "px": [
+    1323,
+    334
+   ]
+  },
+  {
+   "id": "Ground Floor, Stairs 2",
+   "name": "Ground Floor, Stairs 2",
+   "floor": "0",
+   "x": -11.6,
+   "y": 7.13,
+   "px": [
+    1331,
+    598
+   ]
+  },
+  {
+   "id": "Stairs 2 Midway",
+   "name": "Stairs 2 Midway",
+   "floor": "0",
+   "x": -16.71,
+   "y": 7.91,
+   "px": [
+    1291,
+    689
+   ]
+  },
+  {
+   "id": "D-248, 247",
+   "name": "D-248, 247",
+   "floor": "1",
+   "x": 16.71,
+   "y": 11.02,
+   "px": [
+    680,
+    248
+   ]
+  },
+  {
+   "id": "D-242, 243, 244, 245, 246",
+   "name": "D-242, 243, 244, 245, 246",
+   "floor": "1",
+   "x": 16.78,
+   "y": 4.93,
+   "px": [
+    762,
+    269
+   ]
+  },
+  {
+   "id": "Hallway Interection, 1st Floor",
+   "name": "Hallway Interection, 1st Floor",
+   "floor": "1",
+   "x": 9.29,
+   "y": 3.97,
+   "px": [
+    748,
+    373
+   ]
+  },
+  {
+   "id": "D-241/2",
+   "name": "D-241/2",
+   "floor": "1",
+   "x": 10.61,
+   "y": -1.26,
+   "px": [
+    823,
+    374
+   ]
+  },
+  {
+   "id": "D-241/1",
+   "name": "D-241/1",
+   "floor": "1",
+   "x": 12.1,
+   "y": -7.11,
+   "px": [
+    907,
+    375
+   ]
+  }
+ ],
+ "destinations": [
+  {
+   "id": "D-153/2 SMART Space",
+   "name": "D-153/2 SMART Space",
+   "floor": "0",
+   "x": -7.27,
+   "y": 12.27,
+   "category": "room"
+  },
+  {
+   "id": "D-169, CAIR",
+   "name": "D-169, CAIR",
+   "floor": "0",
+   "x": -23.75,
+   "y": 31.63,
+   "category": "room"
+  },
+  {
+   "id": "DLT7/1",
+   "name": "DLT7/1",
+   "floor": "0",
+   "x": -18.68,
+   "y": 69.18,
+   "category": "room"
+  },
+  {
+   "id": "Between stairs and faculty Chamber, 1st floor",
+   "name": "Between stairs and faculty Chamber, 1st floor",
+   "floor": "1",
+   "x": -13.53,
+   "y": 38.08,
+   "category": "room"
+  },
+  {
+   "id": "D-255, 256, 257, 258",
+   "name": "D-255, 256, 257, 258",
+   "floor": "1",
+   "x": -22.84,
+   "y": 29.19,
+   "category": "room"
+  },
+  {
+   "id": "Faculty Chamber Entrance 2, near 2nd Stairs",
+   "name": "Faculty Chamber Entrance 2, near 2nd Stairs",
+   "floor": "1",
+   "x": -12.38,
+   "y": 12.62,
+   "category": "room"
+  },
+  {
+   "id": "Between 1st floor lift and D249/1",
+   "name": "Between 1st floor lift and D249/1",
+   "floor": "1",
+   "x": 3.11,
+   "y": 9.54,
+   "category": "room"
+  }
+ ],
+ "activeModel": "legacy",
+ "edges": [
+  {
+   "a": "Between DLT7 and DLT8",
+   "b": "DLT7/1"
+  },
+  {
+   "a": "DLT-8/1",
+   "b": "Between DLT7 and DLT8"
+  },
+  {
+   "a": "Stairs_Opp_DLT8_2",
+   "b": "DLT8 Ramp"
+  },
+  {
+   "a": "DLT7 Ramp",
+   "b": "Opposite_DLT7_2"
+  },
+  {
+   "a": "Garden_Btw_DLT7_DLT8_Stairs",
+   "b": "Opposite_DLT7_2"
+  },
+  {
+   "a": "Garden_Btw_DLT7_DLT8_Stairs",
+   "b": "Stairs_Opp_DLT8_2"
+  },
+  {
+   "a": "Stairs_Opp_DLT8_2",
+   "b": "Btw_DLT_8_and_F_Chamber_Entrance"
+  },
+  {
+   "a": "Btw_DLT_8_and_F_Chamber_Entrance",
+   "b": "F_Chamber_Entrance_Opp_DLT8"
+  },
+  {
+   "a": "F_Chamber_Entrance_Opp_DLT8",
+   "b": "D-169, CAIR"
+  },
+  {
+   "a": "D-169, CAIR",
+   "b": "D-165,166,167,168"
+  },
+  {
+   "a": "D-165,166,167,168",
+   "b": "D-161,162,163,164"
+  },
+  {
+   "a": "D-161,162,163,164",
+   "b": "D-157,158,159,160"
+  },
+  {
+   "a": "D-157,158,159,160",
+   "b": "Opp_CSIS_Meeting_Room"
+  },
+  {
+   "a": "Opp_CSIS_Meeting_Room",
+   "b": "F_Chamber_Entrance_2"
+  },
+  {
+   "a": "F_Chamber_Entrance_2",
+   "b": "D-154"
+  },
+  {
+   "a": "D-154",
+   "b": "D-153/2 SMART Space"
+  },
+  {
+   "a": "D-154",
+   "b": "D-151/2_D-153/1"
+  },
+  {
+   "a": "D-151/2_D-153/1",
+   "b": "D-152"
+  },
+  {
+   "a": "D-152",
+   "b": "D-151/1 Computation Lab"
+  },
+  {
+   "a": "D-151/1 Computation Lab",
+   "b": "Near_Stairs_To_1st_Floor"
+  },
+  {
+   "a": "Near_Stairs_To_1st_Floor",
+   "b": "Btw_Stairs_and_DLT7"
+  },
+  {
+   "a": "Btw_Stairs_and_DLT7",
+   "b": "Opposite_DLT7_2"
+  },
+  {
+   "a": "Garden_Btw_F_Cham_and_Computational_Lab",
+   "b": "Near_Stairs_To_1st_Floor"
+  },
+  {
+   "a": "F_Chamber_Entrance_Opp_DLT8",
+   "b": "Garden_Btw_F_Cham_and_Computational_Lab"
+  },
+  {
+   "a": "DLT8 Ramp",
+   "b": "DLT-8/1"
+  },
+  {
+   "a": "DLT7 Ramp",
+   "b": "DLT7/1"
+  },
+  {
+   "a": "1st Stairs midway",
+   "b": "1st floor a/f 1st Stairs, D250/2"
+  },
+  {
+   "a": "1st floor a/f 1st Stairs, D250/2",
+   "b": "Between stairs and faculty Chamber, 1st floor"
+  },
+  {
+   "a": "Between stairs and faculty Chamber, 1st floor",
+   "b": "Faculty Chamber Entrance, IT room 1st floor"
+  },
+  {
+   "a": "Faculty Chamber Entrance, IT room 1st floor",
+   "b": "D254/253"
+  },
+  {
+   "a": "D254/253",
+   "b": "D-255, 256, 257, 258"
+  },
+  {
+   "a": "D-255, 256, 257, 258",
+   "b": "D-259, 260, 261, 262"
+  },
+  {
+   "a": "D-259, 260, 261, 262",
+   "b": "D-263, 264, 265, 266"
+  },
+  {
+   "a": "D-263, 264, 265, 266",
+   "b": "D-267"
+  },
+  {
+   "a": "D-267",
+   "b": "HOD, CSIS"
+  },
+  {
+   "a": "D-267",
+   "b": "Faculty Chamber Entrance 2, near 2nd Stairs"
+  },
+  {
+   "a": "Faculty Chamber Entrance 2, near 2nd Stairs",
+   "b": "Corner of FC Entrance 2 and D249/1"
+  },
+  {
+   "a": "D249/1",
+   "b": "Between D249/1 and D249/2"
+  },
+  {
+   "a": "Between D249/1 and D249/2",
+   "b": "D-249/2 and D-250/1"
+  },
+  {
+   "a": "D-249/2 and D-250/1",
+   "b": "D-251"
+  },
+  {
+   "a": "Between stairs and faculty Chamber, 1st floor",
+   "b": "D-251"
+  },
+  {
+   "a": "1st Stairs midway",
+   "b": "Near_Stairs_To_1st_Floor",
+   "via": "stairs"
+  },
+  {
+   "a": "Corner of FC Entrance 2 and D249/1",
+   "b": "Between 1st floor lift and D249/1"
+  },
+  {
+   "a": "Between 1st floor lift and D249/1",
+   "b": "1st floor lift and Stairs 3"
+  },
+  {
+   "a": "1st floor lift and Stairs 3",
+   "b": "D-248, 247"
+  },
+  {
+   "a": "D-248, 247",
+   "b": "D-242, 243, 244, 245, 246"
+  },
+  {
+   "a": "D-242, 243, 244, 245, 246",
+   "b": "Hallway Interection, 1st Floor"
+  },
+  {
+   "a": "Hallway Interection, 1st Floor",
+   "b": "D-241/2"
+  },
+  {
+   "a": "D-241/2",
+   "b": "D-241/1"
+  },
+  {
+   "a": "Midway Stairs 3",
+   "b": "1st floor lift and Stairs 3"
+  },
+  {
+   "a": "Faculty Chamber Entrance 2, near 2nd Stairs",
+   "b": "D249/1"
+  },
+  {
+   "a": "Between Lift and Smart Space",
+   "b": "Ground Floor, Stairs 2"
+  },
+  {
+   "a": "Between Lift and Smart Space",
+   "b": "Ground Floor Lift"
+  }
+ ]
+}

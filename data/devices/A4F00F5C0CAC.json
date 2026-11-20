@@ -1,0 +1,19 @@
+{
+ "magOffset": [
+  -37,
+  20,
+  -1334
+ ],
+ "magScale": [
+  1.0524450744153082,
+  0.9525336754329699,
+  1
+ ],
+ "magVertical": 2,
+ "mirror": false,
+ "headingOffset": 180,
+ "calibratedAt": "2026-11-16T12:14:33.677Z",
+ "accAhead": 2,
+ "accAheadSign": 1,
+ "accSideSign": 1
+}
