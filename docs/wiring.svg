@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1060 760" width="1060" height="760" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <title>WayPoint wiring</title>
+  <style>
+    .box { fill: #f7f7fb; stroke: #33334d; stroke-width: 2; }
+    .esp { fill: #1f2937; stroke: #111; stroke-width: 2; }
+    .t { font-size: 14px; font-weight: 700; fill: #1b1b2f; }
+    .ts { font-size: 11px; fill: #55556a; }
+    .p { font-size: 12px; font-family: Consolas, Menlo, monospace; fill: #1b1b2f; }
+    .pw { font-size: 12px; font-family: Consolas, Menlo, monospace; fill: #f3f4f6; }
+    .w { fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .tag { font-size: 11px; font-weight: 700; fill: #fff; font-family: Consolas, Menlo, monospace; }
+    .note { font-size: 12.5px; fill: #2b2b3d; }
+  </style>
+  <rect width="1060" height="760" fill="#ffffff"/>
+
+  <text x="30" y="38" font-size="22" font-weight="700" fill="#1b1b2f">WayPoint: wiring</text>
+  <text x="30" y="60" class="ts">ESP32 DevKit V1 (30-pin) · 1.8" ST7735R TFT · EC11 encoder · MPU-6050 · GY-271 (QMC5883P) · MB102 breadboard supply</text>
+
+  <!-- ===================== ESP32 ===================== -->
+  <rect class="esp" x="290" y="110" width="170" height="500" rx="8"/>
+  <text x="375" y="134" text-anchor="middle" font-size="14" font-weight="700" fill="#f9fafb">ESP32 DevKit V1</text>
+  <text x="375" y="150" text-anchor="middle" font-size="10.5" fill="#9ca3af">EN … VIN header →</text>
+  <!-- right header pins (physical order, gaps between groups) -->
+  <g class="pw" text-anchor="end">
+    <text x="452" y="174">D34</text><text x="452" y="204">D35</text><text x="452" y="234">D32</text>
+    <text x="452" y="304">D33</text><text x="452" y="334">D25</text><text x="452" y="364">D26</text><text x="452" y="394">D27</text>
+    <text x="452" y="464">D14</text><text x="452" y="494">D13</text>
+    <text x="452" y="554">GND</text><text x="452" y="584">VIN</text>
+  </g>
+  <g class="ts" text-anchor="end" fill="#9ca3af">
+    <text x="412" y="174" fill="#9ca3af">input only</text><text x="412" y="204" fill="#9ca3af">input only</text>
+  </g>
+  <!-- left side: D2 -->
+  <text x="298" y="304" class="pw">D2</text>
+  <text x="298" y="320" font-size="10" fill="#9ca3af">(other header)</text>
+
+  <!-- ===================== Encoder ===================== -->
+  <rect class="box" x="760" y="130" width="220" height="118" rx="6"/>
+  <text x="870" y="150" text-anchor="middle" class="t">EC11 encoder module</text>
+  <g class="p"><text x="768" y="174">S1</text><text x="768" y="204">S2</text><text x="768" y="234">Key</text>
+    <text x="972" y="189" text-anchor="end">5V</text><text x="972" y="219" text-anchor="end">GND</text></g>
+  <g class="w" stroke="#2a9d8f">
+    <path d="M460 170 H760"/><path d="M460 200 H760"/><path d="M460 230 H760"/>
+  </g>
+  <text x="600" y="164" class="ts" fill="#2a9d8f">S1 → GPIO34</text>
+  <text x="600" y="194" class="ts" fill="#2a9d8f">S2 → GPIO35</text>
+  <text x="600" y="224" class="ts" fill="#2a9d8f">Key → GPIO32 (pull-up)</text>
+
+  <!-- ===================== TFT ===================== -->
+  <rect class="box" x="760" y="266" width="220" height="140" rx="6"/>
+  <text x="870" y="286" text-anchor="middle" class="t">1.8" TFT (ST7735R)</text>
+  <g class="p"><text x="768" y="304">CS</text><text x="768" y="334">A0 (DC)</text><text x="768" y="364">SDA (MOSI)</text><text x="768" y="394">SCK</text>
+    <text x="972" y="304" text-anchor="end">VCC</text><text x="972" y="334" text-anchor="end">LED</text><text x="972" y="364" text-anchor="end">RESET</text><text x="972" y="394" text-anchor="end">GND</text></g>
+  <g class="w" stroke="#7b2cbf">
+    <path d="M460 300 H760"/><path d="M460 330 H760"/><path d="M460 360 H760"/><path d="M460 390 H760"/>
+  </g>
+  <text x="560" y="294" class="ts" fill="#7b2cbf">SPI · 15 MHz · no MISO</text>
+
+  <!-- ===================== I2C sensors ===================== -->
+  <rect class="box" x="760" y="424" width="220" height="96" rx="6"/>
+  <text x="870" y="444" text-anchor="middle" class="t">MPU-6050 (GY-521) 0x68</text>
+  <g class="p"><text x="768" y="464">SDA</text><text x="768" y="494">SCL</text>
+    <text x="972" y="464" text-anchor="end">VCC</text><text x="972" y="494" text-anchor="end">GND</text></g>
+
+  <rect class="box" x="760" y="540" width="220" height="96" rx="6"/>
+  <text x="870" y="560" text-anchor="middle" class="t">GY-271 (QMC5883P) 0x2C</text>
+  <g class="p"><text x="768" y="584">SDA</text><text x="768" y="614">SCL</text>
+    <text x="972" y="584" text-anchor="end">VCC</text><text x="972" y="614" text-anchor="end">GND</text></g>
+
+  <g class="w" stroke="#1d4ed8"><path d="M460 460 H760"/><path d="M640 460 V580 H760"/></g>
+  <g class="w" stroke="#0891b2"><path d="M460 490 H760"/><path d="M680 490 V610 H760"/></g>
+  <circle cx="640" cy="460" r="4.5" fill="#1d4ed8"/><circle cx="680" cy="490" r="4.5" fill="#0891b2"/>
+  <text x="485" y="454" class="ts" fill="#1d4ed8">SDA · GPIO14</text>
+  <text x="485" y="484" class="ts" fill="#0891b2">SCL · GPIO13</text>
+  <text x="485" y="518" class="ts">one I2C bus, 400 kHz</text>
+
+  <!-- ===================== ESP32 power pins ===================== -->
+  <g class="w"><path d="M460 550 H500" stroke="#222"/><path d="M460 580 H500" stroke="#d62828"/></g>
+  <rect x="500" y="542" width="40" height="16" rx="3" fill="#222"/><text x="520" y="554" text-anchor="middle" class="tag">GND</text>
+  <rect x="500" y="572" width="40" height="16" rx="3" fill="#d62828"/><text x="520" y="584" text-anchor="middle" class="tag">5V</text>
+
+  <!-- ===================== module power tags ===================== -->
+  <!-- each: stub from the box edge, then a net tag -->
+  <g class="w">
+    <path d="M980 185 H1000" stroke="#e76f00"/><path d="M980 215 H1000" stroke="#222"/>
+    <path d="M980 300 H1000" stroke="#e76f00"/><path d="M980 330 H1000" stroke="#e76f00"/><path d="M980 360 H1000" stroke="#e76f00"/><path d="M980 390 H1000" stroke="#222"/>
+    <path d="M980 460 H1000" stroke="#e76f00"/><path d="M980 490 H1000" stroke="#222"/>
+    <path d="M980 580 H1000" stroke="#e76f00"/><path d="M980 610 H1000" stroke="#222"/>
+  </g>
+  <g>
+    <rect x="1000" y="177" width="40" height="16" rx="3" fill="#e76f00"/><text x="1020" y="189" text-anchor="middle" class="tag">3V3</text>
+    <rect x="1000" y="207" width="40" height="16" rx="3" fill="#222"/><text x="1020" y="219" text-anchor="middle" class="tag">GND</text>
+    <rect x="1000" y="292" width="40" height="16" rx="3" fill="#e76f00"/><text x="1020" y="304" text-anchor="middle" class="tag">3V3</text>
+    <rect x="1000" y="322" width="40" height="16" rx="3" fill="#e76f00"/><text x="1020" y="334" text-anchor="middle" class="tag">3V3</text>
+    <rect x="1000" y="352" width="40" height="16" rx="3" fill="#e76f00"/><text x="1020" y="364" text-anchor="middle" class="tag">3V3</text>
+    <rect x="1000" y="382" width="40" height="16" rx="3" fill="#222"/><text x="1020" y="394" text-anchor="middle" class="tag">GND</text>
+    <rect x="1000" y="452" width="40" height="16" rx="3" fill="#e76f00"/><text x="1020" y="464" text-anchor="middle" class="tag">3V3</text>
+    <rect x="1000" y="482" width="40" height="16" rx="3" fill="#222"/><text x="1020" y="494" text-anchor="middle" class="tag">GND</text>
+    <rect x="1000" y="572" width="40" height="16" rx="3" fill="#e76f00"/><text x="1020" y="584" text-anchor="middle" class="tag">3V3</text>
+    <rect x="1000" y="602" width="40" height="16" rx="3" fill="#222"/><text x="1020" y="614" text-anchor="middle" class="tag">GND</text>
+  </g>
+  <text x="870" y="122" text-anchor="middle" font-size="11" font-weight="700" fill="#d62828">"5V" pin to 3.3 V, never 5 V</text>
+
+  <!-- ===================== API LED on D2 ===================== -->
+  <g class="w" stroke="#555">
+    <path d="M290 300 H250"/><path d="M210 300 H185"/><path d="M160 300 H140 V316"/>
+  </g>
+  <rect x="210" y="293" width="40" height="14" rx="2" fill="#fff" stroke="#555" stroke-width="2"/>
+  <text x="230" y="286" text-anchor="middle" class="ts">220 Ω–1 kΩ</text>
+  <polygon points="185,290 185,310 163,300" fill="#38bdf8" stroke="#555" stroke-width="2"/>
+  <path d="M161 289 V311" stroke="#555" stroke-width="2.5"/>
+  <path d="M140 316 H156 M144 320 H152 M147 324 H149" stroke="#222" stroke-width="2"/>
+  <text x="162" y="342" text-anchor="middle" class="ts">API LED (optional)</text>
+  <text x="162" y="356" text-anchor="middle" class="ts">lit while the server answers;</text>
+  <text x="162" y="370" text-anchor="middle" class="ts">the board's blue LED does the same</text>
+
+  <!-- ===================== MB102 supply ===================== -->
+  <rect class="box" x="40" y="440" width="170" height="130" rx="6"/>
+  <text x="125" y="462" text-anchor="middle" class="t">MB102 supply</text>
+  <text x="125" y="478" text-anchor="middle" class="ts">USB or barrel jack in</text>
+  <g class="p" text-anchor="end"><text x="202" y="504">5V rail</text><text x="202" y="534">3V3 rail</text><text x="202" y="564">GND rail</text></g>
+  <g class="w"><path d="M210 500 H230" stroke="#d62828"/><path d="M210 530 H230" stroke="#e76f00"/><path d="M210 560 H230" stroke="#222"/></g>
+  <rect x="230" y="492" width="40" height="16" rx="3" fill="#d62828"/><text x="250" y="504" text-anchor="middle" class="tag">5V</text>
+  <rect x="230" y="522" width="40" height="16" rx="3" fill="#e76f00"/><text x="250" y="534" text-anchor="middle" class="tag">3V3</text>
+  <rect x="230" y="552" width="40" height="16" rx="3" fill="#222"/><text x="250" y="564" text-anchor="middle" class="tag">GND</text>
+
+  <!-- ===================== notes ===================== -->
+  <line x1="30" y1="662" x2="1030" y2="662" stroke="#ddd"/>
+  <text x="30" y="686" class="note">• Tags with the same name are the same net: every <tspan font-weight="700" fill="#e76f00">3V3</tspan> goes to the MB102's 3.3 V rail, every <tspan font-weight="700">GND</tspan> to its ground rail, and <tspan font-weight="700" fill="#d62828">5V</tspan> feeds only the ESP32's VIN.</text>
+  <text x="30" y="708" class="note">• USB alone powers only the ESP32: switch the MB102 on for the screen and sensors. USB is needed only for the first flash; after that, flash over WiFi.</text>
+  <text x="30" y="730" class="note">• TFT RESET is tied to 3.3 V (the firmware resets the panel in software). The encoder's own pull-ups need 3.3 V: 5 V would reach GPIO34/35.</text>
+  <text x="30" y="752" class="note">• Layout: no jumpers over the TFT or the encoder (screen visible, knob reachable). Pins and options: firmware/waypoint/config.h.</text>
+</svg>

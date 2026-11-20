@@ -13,6 +13,14 @@ _archive/
 secrets.h
 **/secrets/
 *.pem
+# Campus site plan and anything rendered from it (not ours to publish)
+private/
+# Device debug telemetry: large, and lists nearby networks
+data/sessions/**/telemetry.jsonl
+# Crash dumps the device uploads (data/coredumps/*.bin): machine-specific
+data/coredumps/
+# Which site this laptop localizes for (Studio header); without it the server picks the first site
+sites/active.txt
 
 # =============================================================================
 #  Operating systems
@@ -550,3 +558,9 @@ temp/
 
 # Old firmware kept locally for reference, not tracked
 archive/
+
+# Deleted site packs (Studio moves them here)
+sites/.trash/
+
+# Firmware builds for flashing over WiFi (firmware/flash-wifi.ps1)
+firmware/build/

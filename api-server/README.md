@@ -2,24 +2,43 @@
 
 A small web server that runs on your laptop. The WayPoint device sends it a
 list of the WiFi networks it can see, and the server replies with where you
-are.
+are. It also runs everything behind the Studio: site packs, recording takes,
+training, the device's telemetry and commands, its navigation data and its
+firmware updates.
 
-It is a cut-down copy of `04_API/` from the
-[Indoor-Localization](https://github.com/akshit-a9/Indoor-Localization) repo.
-It keeps only the one model the ESP32 can use, so nothing else from that
-repo is needed.
+It started as a cut-down copy of `04_API/` from the
+[Indoor-Localization](https://github.com/akshit-a9/Indoor-Localization) repo;
+nothing else from that repo is needed.
 
 ## Files
 
 ```
 api-server/
-├── server.py           The web server: defines the URLs (/health, /predict, ...)
-├── localizer.py        Loads the model and turns a WiFi scan into a location
+├── server.py           The web server: every URL (device, Studio, telemetry)
+├── localizer.py        The original D-block model ("legacy"): scan -> location
 ├── model/
-│   └── Random_Forest_2_4GHz.joblib   The trained model (~74 MB)
+│   └── Random_Forest_2_4GHz.joblib   That model (~74 MB)
+├── sites.py            Site packs on disk (sites/<id>/, private/sites/<id>/), the active site
+├── training.py         Trains a site's Random Forest from its takes, scores it in metres
+├── live.py             Latest scan and fix per device; records takes for the Collect tab
+├── telemetry.py        Device telemetry batches: kept in memory, logged to data/sessions/
+├── stream.py           UDP receiver for the 25 Hz live sensor stream (port 8001)
+├── import_legacy.py    One-off: turned Indoor-Localization's recordings into D-block takes
 ├── sample_scan.json    A real scan, for testing without the ESP32
 └── requirements.txt    Python packages to install
 ```
+
+Data it reads and writes, outside this folder:
+
+| Path | What | In git |
+|---|---|---|
+| `../sites/<id>/` | Site packs: `site.json`, `recordings/*.csv`, `models/vN.joblib`, `plans/` | yes |
+| `../private/sites/<id>/` | Sites kept out of git (the Studio's "keep out of git") | no |
+| `../sites/active.txt` | Which site `/predict` answers for (the Studio header sets it) | no |
+| `../data/devices/<MAC>.json` | Each board's compass calibration | yes |
+| `../data/sessions/` | Telemetry logs, one folder per device boot | no |
+| `../data/coredumps/` | Crash dumps the device uploads | no |
+| `../firmware/build/waypoint.ino.bin` | The build served for WiFi updates | no |
 
 ## How it works
 
@@ -103,6 +122,22 @@ allow Python through the firewall for private networks the first time it asks.
 | GET    | `/locations` | Lists all 52 locations the model can return.  |
 | POST   | `/predict`   | Takes one WiFi scan, returns a location.      |
 
+All three answer for the **active site** (see `../sites/active.txt`, or the
+Studio header). Sites with a model trained in the Studio also return `spot`,
+`xy` (metres) and `top` (5 best spots). `/api/*` is the Studio's API, and the
+built Studio is served at `/studio/`. See [../studio/README.md](../studio/README.md).
+
+The rest, grouped (open http://localhost:8000/docs for every parameter):
+
+| Group | Endpoints |
+|---|---|
+| Sites | `GET/POST /api/sites`, `GET/PUT/DELETE /api/sites/{id}`, `PUT /api/active`, `GET /api/sites/{id}/floors/{floor}/overlay` (plan image) |
+| Recording | `GET /api/live`, `POST/DELETE /api/take`, `GET /api/sites/{id}/recordings`, `DELETE .../recordings/{take}` |
+| Training | `POST /api/sites/{id}/train`, `GET /api/sites/{id}/models`, `PUT .../models/active`, `DELETE .../models/{v}` |
+| Devices | `GET/PUT /api/devices/{id}/orientation` (compass calibration) |
+| Telemetry | `POST /api/device/telemetry` (the device, once a second; the reply carries commands, take progress, nav version, clock), `GET /api/telemetry`, `GET /api/telemetry/{id}?since=n`, `GET /api/telemetry/{id}/live` (SSE, 25 Hz sensors), `POST /api/telemetry/{id}/command` |
+| Device | `GET /api/device/nav` (nav pack), `GET /api/device/firmware` (OTA), `POST /api/device/coredump` |
+
 `POST /predict` request:
 
 ```json
@@ -130,7 +165,12 @@ the location is a meaningless guess (the firmware shows an error instead).
 
 ## Using a newly trained model
 
-Retrain in Indoor-Localization, copy the new `.joblib` bundle into `model/`,
+The usual way now: the Studio's **Train** tab trains a model for the site from
+its takes and saves it as `sites/<id>/models/vN.joblib`; making it active
+switches `/predict` to it, no restart needed. The D block still uses the
+`legacy` model below until a Studio-trained one beats it.
+
+To replace the legacy model: retrain in Indoor-Localization, copy the new `.joblib` bundle into `model/`,
 and update `MODEL_PATH` in `localizer.py` if the file name changed. The bundle
 must be a dict with `model`, `feature_bssids` and `label_map`, like the one
 `06_Train_2_4GHz_Model.py` saves. Then restart the server.
