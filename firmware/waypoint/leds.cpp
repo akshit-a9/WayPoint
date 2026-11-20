@@ -5,6 +5,7 @@
 #include "leds.h"
 
 static void setupPin(int pin) {
+  if (pin < 0) return;   // not fitted
   pinMode(pin, OUTPUT);
   // Weakest drive strength (~5 mA): keeps an LED wired without a resistor,
   // and the pin driving it, from being damaged.
@@ -12,6 +13,7 @@ static void setupPin(int pin) {
 }
 
 static void rgbPinWrite(int pin, bool on) {
+  if (pin < 0) return;
   if (RGB_COMMON_ANODE) on = !on;  // common anode LEDs light when the pin is LOW
   digitalWrite(pin, on ? HIGH : LOW);
 }
