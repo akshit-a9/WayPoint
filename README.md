@@ -150,6 +150,8 @@ One knob: **turn** to move, **click** to choose, **hold** (0.6 s) to go back.
 
 ## Wiring (current build)
 
+![Wiring diagram](docs/wiring.svg)
+
 Everything is on one breadboard powered by an **MB102** supply: its 5 V rail
 feeds the ESP32's VIN, its 3.3 V rail feeds every module. USB alone powers
 only the ESP32, so plug the supply in for the sensors and screen.
